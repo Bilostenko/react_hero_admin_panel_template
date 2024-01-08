@@ -26,12 +26,11 @@ const HeroesList = () => {
     }, []);
     console.log(heroes)
 
-    // use useCallback()
-    // const onDelete = (id) => {
-    //     request("http://localhost:3001/heroes/${id}", "DELETE")
-    //     .then(console.log('DELETED'))
-    //     .catch(() => dispatch(heroesFetchingError()))
-    // }
+    const onDelete = (id) => {
+        request(`http://localhost:3001/heroes/${id}`, "DELETE")
+        .then(console.log('DELETED'))
+        .catch(() => dispatch(heroesFetchingError()))
+    }
 
     if (heroesLoadingStatus === "loading") {
         return <Spinner/>;
