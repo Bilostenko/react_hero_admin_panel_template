@@ -3,7 +3,7 @@ import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 
-import { heroesFetching, heroesFetched, heroesFetchingError } from '../../actions';
+import { heroesFetching, heroesFetched, heroesFetchingError, heroDeleted } from '../../actions';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 
@@ -24,11 +24,12 @@ const HeroesList = () => {
 
         // eslint-disable-next-line
     }, []);
-    console.log(heroes)
+   
 
     const onDelete = (id) => {
         request(`http://localhost:3001/heroes/${id}`, "DELETE")
         .then(console.log('DELETED'))
+        .then(dispatch(heroDeleted(id)))
         .catch(() => dispatch(heroesFetchingError()))
     }
 
