@@ -1,4 +1,7 @@
-
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from 'react-redux';
+import { heroCreate } from '../../actions';
 
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -11,36 +14,56 @@
 // данных из фильтров
 
 const HeroesAddForm = () => {
+
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [element, setElement] = useState('');
+
+    const dispatch = useDispatch();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const id = uuidv4()
+        console.log({ name, description, element, id });
+        dispatch(heroCreate({name, description, element, id}));
+        // setName('');
+        // setDescription('');
+        // setElement('');
+    }
+
     return (
-        <form className="border p-4 shadow-lg rounded">
+        <form className="border p-4 shadow-lg rounded" onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label fs-4">Имя нового героя</label>
-                <input 
+                <input
                     required
-                    type="text" 
-                    name="name" 
-                    className="form-control" 
-                    id="name" 
-                    placeholder="Как меня зовут?"/>
+                    type="text"
+                    name="name"
+                    className="form-control"
+                    // id="name" 
+                    onChange={event => setName(event.target.value)}
+                    placeholder="Как меня зовут?" />
             </div>
 
             <div className="mb-3">
                 <label htmlFor="text" className="form-label fs-4">Описание</label>
                 <textarea
                     required
-                    name="text" 
-                    className="form-control" 
-                    id="text" 
+                    name="text"
+                    className="form-control"
+                    // id="text" 
                     placeholder="Что я умею?"
-                    style={{"height": '130px'}}/>
+                    onChange={event => setDescription(event.target.value)}
+                    style={{ "height": '130px' }} />
             </div>
 
             <div className="mb-3">
                 <label htmlFor="element" className="form-label">Выбрать элемент героя</label>
-                <select 
+                <select
                     required
-                    className="form-select" 
-                    id="element" 
+                    className="form-select"
+                    id="element"
+                    onChange={event => setElement(event.target.value)}
                     name="element">
                     <option >Я владею элементом...</option>
                     <option value="fire">Огонь</option>
