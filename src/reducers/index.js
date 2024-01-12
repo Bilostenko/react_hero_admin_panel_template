@@ -31,10 +31,11 @@ const reducer = (state = initialState, action) => {
             };
 
         case 'HEROE_CREATE':
+            let newCreatedHeroList = [...state.heroes, action.payload];
             return {
                 ...state,
-                heroes: [...state.heroes, action.data]
-              };
+                heroes: newCreatedHeroList
+            };
 
         default: return state
     }

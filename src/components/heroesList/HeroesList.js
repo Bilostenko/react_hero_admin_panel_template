@@ -26,12 +26,14 @@ const HeroesList = () => {
     }, []);
    
 
-    const onDelete = (id) => {
+    const onDelete = useCallback((id) => {
+        // Удаление персонажа по его id
         request(`http://localhost:3001/heroes/${id}`, "DELETE")
-        .then(console.log('DELETED'))
-        .then(dispatch(heroDeleted(id)))
-        .catch(() => dispatch(heroesFetchingError()))
-    }
+            .then(data => console.log(data, 'Deleted'))
+            .then(dispatch(heroDeleted(id)))
+            .catch(err => console.log(err));
+        // eslint-disable-next-line  
+    }, [request]);
 
     if (heroesLoadingStatus === "loading") {
         return <Spinner/>;

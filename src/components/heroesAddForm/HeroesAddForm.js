@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { heroCreate } from '../../actions';
+import { useHttp } from '../../hooks/http.hook';
+
+
 
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -18,19 +21,29 @@ const HeroesAddForm = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [element, setElement] = useState('');
+    const {request} = useHttp();
 
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const id = uuidv4()
-        console.log({ name, description, element, id });
-        dispatch(heroCreate({name, description, element, id}));
-        // setName('');
-        // setDescription('');
-        // setElement('');
-    }
 
+        const newHero = {
+            id: uuidv4(),
+            name: name,
+            description: description,
+            element: element
+        }
+        request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
+        .then(res => console.log(res, 'Отправка успешна'))
+        .then(dispatch(heroCreate(newHero)))
+        .catch(err => console.log(err));
+
+        setName('');
+        setDescription('');
+        setElement('');
+    }
+// ЧЕРЕЗ POST ДОДАВАТИ ХИРО. ЗЯСУВАТИ ПРОБЛЕМУ ВИДАЛЕННЯ ХІРО 
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={handleSubmit}>
             <div className="mb-3">

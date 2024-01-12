@@ -24,10 +24,10 @@ export const heroDeleted = (id) => {
         
     }
 }
-export const heroCreate = (name, description, element, id) => {
+export const heroCreate = (newHero) => {
     return {
         type: 'HEROE_CREATE',
-        data: name, description, element, id
+        payload: newHero
         
     }
 }
