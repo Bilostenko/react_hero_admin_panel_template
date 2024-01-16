@@ -31,3 +31,10 @@ export const heroCreate = (newHero) => {
         
     }
 }
+
+export const activeFilterChanged = (filter) => {
+    return {
+        type: 'ACTIVE_FILTER_CHANGED',
+        payload: filter
+    }
+}
