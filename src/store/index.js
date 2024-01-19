@@ -1,6 +1,6 @@
 import { legacy_createStore as createStore, compose, applyMiddleware } from 'redux';
 import { combineReducers } from 'redux';
-import ReduxThunk from 'redux-thunk';
+import { thunk as ReduxThunk } from 'redux-thunk';
 import heroes from '../reducers/heroes';
 import filters from '../reducers/filters';
 

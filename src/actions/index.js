@@ -1,6 +1,25 @@
+export const fetchHeroes = (request)=>(dispatch)=>{
+    dispatch(heroesFetching);
+    request("http://localhost:3001/heroes")
+        .then(data => dispatch(heroesFetched(data)))
+        .catch(() => dispatch(heroesFetchingError()))
+
+}
+
 export const heroesFetching = () => {
     return {
         type: 'HEROES_FETCHING'
+    }
+}
+export const heroesFetchingError = () => {
+    return {
+        type: 'HEROES_FETCHING_ERROR'
+    }
+}
+export const heroesFetched = (heroes) => {
+    return {
+        type: 'HEROES_FETCHED',
+        payload: heroes
     }
 }
 
@@ -10,12 +29,6 @@ export const filtersFetching = () => {
     }
 }
 
-export const heroesFetched = (heroes) => {
-    return {
-        type: 'HEROES_FETCHED',
-        payload: heroes
-    }
-}
 
 export const filtersFetched = (filters) => {
     return {
@@ -24,11 +37,6 @@ export const filtersFetched = (filters) => {
     }
 }
 
-export const heroesFetchingError = () => {
-    return {
-        type: 'HEROES_FETCHING_ERROR'
-    }
-}
 
 export const filtersFetchingError = () => {
     return {
