@@ -25,6 +25,11 @@ const HeroesAddForm = () => {
 
     const dispatch = useDispatch();
 
+    const clearFields = () => {
+        setName('');
+        setDescription('');
+        setElement('');
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -37,11 +42,9 @@ const HeroesAddForm = () => {
         request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
         .then(res => console.log(res, 'Отправка успешна'))
         .then(dispatch(heroCreate(newHero)))
+        .then(clearFields(), console.log('huy'))
         .catch(err => console.log(err));
-
-        setName('');
-        setDescription('');
-        setElement('');
+        
     }
 // ЧЕРЕЗ POST ДОДАВАТИ ХИРО. ЗЯСУВАТИ ПРОБЛЕМУ ВИДАЛЕННЯ ХІРО 
     return (
