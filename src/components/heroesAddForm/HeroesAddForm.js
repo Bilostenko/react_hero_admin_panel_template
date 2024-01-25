@@ -10,14 +10,8 @@ const HeroesAddForm = () => {
     const [description, setDescription] = useState('');
     const [element, setElement] = useState('');
     const {request} = useHttp();
-
     const dispatch = useDispatch();
 
-    const clearFields = () => {
-        setName('');
-        setDescription('');
-        setElement('');
-    }
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -29,10 +23,15 @@ const HeroesAddForm = () => {
         }
         request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
         .then(dispatch(heroCreate(newHero)))
-        .then(() => clearFields())
         .catch(err => console.log(err));   
+
+        setName('');
+        setDescription('');
+        // setElement('');
         
     }
+
+    
     return (
         <form className="border p-4 shadow-lg rounded" onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -42,8 +41,9 @@ const HeroesAddForm = () => {
                     type="text"
                     name="name"
                     className="form-control"
-                    // id="name" 
+                    id="name" 
                     onChange={event => setName(event.target.value)}
+                    value={name}
                     placeholder="What is your name?" />
             </div>
 
@@ -53,8 +53,9 @@ const HeroesAddForm = () => {
                     required
                     name="text"
                     className="form-control"
-                    // id="text" 
+                    id="text" 
                     placeholder="Tell us something about your hero"
+                    value={description}
                     onChange={event => setDescription(event.target.value)}
                     style={{ "height": '130px' }} />
             </div>
